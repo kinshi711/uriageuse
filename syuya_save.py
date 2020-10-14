@@ -1,7 +1,6 @@
 import os
-import datetime
 import xlwings as xw
-w_Book = xw.Book(w_path)
+w_Book = xw.Book(w_path)#アクティブアプリケーションのブック管理インスタンスを返す,つまり今動いているエクセルをw_bookと命名
 w_year =w_Book.sheets['売り上げ記入用'].range('F2').value
 year_dict = {'{}年.xlsx'.format(w_year): os.path.join(save_folder_path,'{}年保存先.xlsx'.format(w_year))}
 w_path= os.path.join(dirname,'書き込み用エクセルファイル.xlsm')

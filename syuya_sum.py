@@ -1,8 +1,9 @@
 import os
 import datetime
 import xlwings as xw
-dirname= os.getcwd() #絶対参照というか自分の今いる場所がわかる
-save_folder_path =os.path.join(dirname,'保存先')
+dirname= os.getcwd() #絶対参照というか自分の今いる場所がわかる /uriage
+#print(dirname) /uriageになる
+save_folder_path =os.path.join(dirname,'保存先')#ここで売り上げの中の保存先っているディレクトリに行ってねって指示できている
 w_path= os.path.join(dirname,'書き込み用エクセルファイル.xlsm')
 natural_save_excel = os.path.join(dirname,'shuya_natural保存先.xlsx')
 w_Book = xw.Book(w_path)
