@@ -7,7 +7,7 @@ save_folder_path =os.path.join(dirname,'保存先')#ここで売り上げの中�
 w_path= os.path.join(dirname,'書き込み用エクセルファイル.xlsm')#os.path.joinっているのはパスをつなげるときに必要、joinだけだとできない
 natural_save_excel = os.path.join(save_folder_path,'shuya_natural保存先.xlsx')
 w_Book = xw.Book(w_path)#書き込み用エクセルファイルのパスのファイルを読み込んで、それをw_bookと置いて活用しやすいようにする
-w_year =int(w_Book.sheets['売り上げ記入用'].range('F2').value)#書き込み用エクセルファイルで選択された年の値を読み取る
+w_year =str(w_Book.sheets['売り上げ記入用'].range('F2').value)#書き込み用エクセルファイルで選択された年の値を読み取る
 w_Book.close()#いったん閉じる　無駄なリソースを使わないために
 path_dict={'save_folder' : os.path.join(save_folder_path),'2020.xlsx':os.path.join(save_folder_path,'2020年保存先.xlsx')}
 #save_folderって入力したら後のやつが呼び出されるsave_folder_pathがでて、2020.xlsxだと2020年保存先.xlsxが出てくる　保存先ディレクトリの中にある
@@ -36,26 +36,33 @@ s_path= os.path.join(year_dict['{}年.xlsx'.format(w_year)])#保存先エクセ�
 xw1 = xw.Book(w_path)#書き込み用エクセルファイルを変数に置く
 xw2 = xw.Book(s_path)#保存先エクセルファイルを変数に置く
 sheet1 = xw1.sheets['売り上げ記入用']#書き込み用エクセルファイルの売り上げ記入用シートをsheet1遠く
-try:
+try:#例外処理の対応をするために使う
     def day_sum():
-        def osi_sum():
-            o_sum = sum([sheet1['B{}'.format(n1)].value * sheet1['C{}'.format(n1)].value for n1 in range(1, 5, 1)])
-        def water_sum():
+        def osi_sum():#おしぼりの合計の値を調べる　なんで値をforで回していないかっていうと、エクセルの使用でできないらしい。　だから仮の文字を入れておいて、それを文字で回す
+            o_sum = sum([sheet1['B{}'.format(n1)].value * sheet1['C{}'.format(n1)].value for n1 in range(1, 5, 1)])#1-4まで
+            return  o_sum
+        def water_sum():#水の合計の値を示している
             w_sum = sum([sheet1['B{}'.format(n2)].value * sheet1['C{}'.format(n2)].value for n2 in range(5, 10, 1)])
-        def ice_sum():
+            return w_sum
+        def ice_sum():#氷の合計の値を調べている
             i_sum = sum([sheet1['B{}'.format(n3)].value * sheet1['C{}'.format(n3)].value for n3 in range(10, 17, 1)])
-        osibori = osi_sum()
+            return i_sum
+        osibori = osi_sum()#インスタンス化
         water= water_sum()
         ice = ice_sum()
-        d_sum =osi_sum()+water_sum()+ice_sum()
+        d_sum =osi_sum()+water_sum()+ice_sum()#一日の合計を示すものをインスタンス化している
     def month_sum(command):
         for m in range(1,13,1):
-            sheet2 = xw2.sheets['{}月'.format(m)]
-            m_sum= sum([sheet2['E{}'.format(num)].value+sheet2['E{}'.format(num)].value for num in range(2,30,1)])
-    def year_sum(self,command):
+            sheet2 = xw2.sheets['{}月'.format(m)]#sheet2に保存用エクエルファイルの各月を対応するようにしている
+            m_sum= sum(sheet2['E{}'.format(num)].value for num in range(2,30,1))
+    def year_sum(self,command):#
             y_sheet = xw2.sheets['年'].range('B2:B13').value[0:][0:]
             y_sum = sum(self.y_sheet)
 except TypeError:
     print('数字が書かれてない場合があります　何もないところは0を書いてください')
 xw1.close()
 xw2.close()
+
+def na():
+    print("ari")
+na = na()
