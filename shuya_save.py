@@ -23,5 +23,4 @@ path_dict['{}.xlsx'.format(w_year)] = os.path.join(save_folder_path,'{}年保存
 year_Book = xw.Book()#エクセルを作成
 new_year_Book =year_Book.save(path_dict['{}.xlsx'.format(w_year)])#pathを指定して保存する　
 year_Book.close()#エクセルを閉じている
-
 # sht.range('A1').options(empty='NA').value
