@@ -1,7 +1,9 @@
 import os
 from openpyxl import Workbook
 import xlwings as xw
-import syuya
+import shuya_sum
+import shuya_save
+
 day_sum = syuya.day_sum()#日合計の関数を取得
 month_sum = syuya.month_sum()#月合計の関数を取得
 year_sum = syuya.year_sum()#年合計の関数を取得
