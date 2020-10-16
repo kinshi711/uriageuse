@@ -5,6 +5,7 @@ dirname= os.getcwd() #現在の場所を調べる
 save_folder_path =os.path.join(dirname,'保存先')
 w_path= os.path.join(dirname,'書き込み用エクセルファイル.xlsm')
 xw1 = xw.Book(w_path)
+
 w_year =int(xw1.sheets['売り上げ記入用'].range('F2').options(empty=2020).value)
 s_path= os.path.join(save_folder_path,'{}年保存先.xlsx'.format(w_year))
 xw2 = xw.Book(s_path)
