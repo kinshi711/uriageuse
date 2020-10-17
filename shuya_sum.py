@@ -17,7 +17,6 @@ def osi_sum():
        empty=0).value for n1 in range(1, 5, 1)])
     wet_towel = int(o_sum)
     return wet_towel
-    print(wet_towel)
 
 def water_sum():
     w_sum = sum([sheet1.range('B{}'.format(n2)).options(empty=0).value * sheet1.range('C{}'.format(n2)).options(
@@ -30,6 +29,10 @@ def ice_sum():
         empty=0).value for n3 in range(10, 17, 1)])
     ice = int(i_sum)
     return ice
+osi_sum()
+water_sum()
+ice_sum()
+
 
 def month_sum():
     for m in range(1,13,1):
