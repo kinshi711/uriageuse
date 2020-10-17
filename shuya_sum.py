@@ -14,10 +14,13 @@ sheet1 = xw1.sheets['売り上げ記入用']
 def day_sum():
     def osi_sum():
         o_sum = sum([sheet1.range('B{}'.format(n1)).options(empty=0).value * sheet1.range('C{}'.format(n1)).options(empty=0).value for n1 in range(1, 5, 1)])
+        return o_sum
     def water_sum():
         w_sum = sum([sheet1.range('B{}'.format(n2)).options(empty=0).value * sheet1.range('C{}'.format(n2)).options(empty=0).value for n2 in range(5, 10, 1)])
+        return w_sum
     def ice_sum():
         i_sum = sum([sheet1.range('B{}'.format(n3)).options(empty=0).value * sheet1.range('C{}'.format(n3)).options(empty=0).value for n3 in range(10, 17, 1)])
+        return i_sum
     osibori = osi_sum()
     water = water_sum()
     ice = ice_sum()

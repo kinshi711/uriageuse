@@ -1,15 +1,23 @@
 import os
 from openpyxl import Workbook
 import xlwings as xw
-from shuya_sum import day_sum,month_sum,year_sum
+import shuya_sum
 import shuya_save
 
+day_sum = shuya_sum.day_sum()#日合計の関数を取得
+month_sum = shuya_sum.month_sum()#月合計の関数を取得
+year_sum = shuya_sum.year_sum()#年合計の関数を取得
+
+wet_towel = shuya_sum.osibori#おしぼりのインスタンス化されている関数を取得
+water = shuya_sum.water#水のインスタンス化されている関数を取得
+ice = shuya_sum.ice#氷の
+# インスタンス化されている関数を取得　上の三つは入り子構造だから読めないよ
+na = shuya_sum.na #なんやこれは
 dirname= os.getcwd() #絶対参照というか自分の今いる場所がわかる /uriage
-print(dirname)
+#print(dirname) /uriageになる
 w_path= os.path.join(dirname,'書き込み用エクセルファイル.xlsm')#os.path.joinっているのはパスをつなげるときに必要、joinだけだとできない
 
 w_Book = xw.Book(w_path)#書き込み用エクセルファイルのパスのファイルを読み込んで、それをw_bookと置いて活用しやすいようにする
-#書き込み用エクセルファイルは開けている
 w_year =str(w_Book.sheets['売り上げ記入用'].range('F2').value)#書き込み用エクセルファイルで選択された年の値を読み取る
 w_month = str(w_Book.sheets['売り上げ記入用'].range('G1').value)
 w_day = str(w_Book.sheets["売り上げ記入用"].range('I1').value)
@@ -19,7 +27,8 @@ def sum_to_save():
     save_file = os.path.join(save_folder_path,'{}念保存先.xlsx'.format(w_year))
     save_month_sheet = save_file.sheets['{}月'.format(w_month)]# sheet の定義がされてないよ
     save_day = save_month_sheet.Range('B{}'.format(w_day + 1)) # I1+1になってしまってるよ
-    day_sum = save_day.value
+    save_day.value = day_sum
+
 
 
 #今の段階の整理
