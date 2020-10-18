@@ -2,6 +2,7 @@ import xlwings as xw
 import os
 import numpy as np
 
+
 path_dict = {}  # 空辞書を作って　パスを追加していく
 dir = os.getcwd()  # 絶対参照というか自分の今いる場所がわかる /uriage
 path_dict['w_path'] = os.path.join(dir, '書き込み用エクセルファイル.xlsm')  # os.path.joinっているのはパスをつなげるときに必要、joinだけだとできない
