@@ -42,5 +42,6 @@ else:
     year_Book.save(path_dict['{}.xlsx'.format(w_year)])  # pathを指定して保存する
     year_Book.close()  # 書かれた年の作成ファイルを閉じる
 
+
 w_Book.close()  # 書き込みファイル閉じる
 xw.Book(natural_save_excel).close()  # 原本ファイル閉じる
