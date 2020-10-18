@@ -1,5 +1,4 @@
 import os
-from openpyxl import Workbook
 import xlwings as xw
 import shuya_sum
 import shuya_save
