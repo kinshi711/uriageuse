@@ -14,7 +14,6 @@ w_day = str(w_Book.sheets["売り上げ記入用"].range('I1').value)
 
 save_folder_path = os.path.join(dirname,'保存先')
 s_path = os.path.join(save_folder_path,'{}年保存先.xlsx'.format(w_year))
-s_Book = xw.Book(s_path)
 
 xw1 = xw.Book(w_path)
 
@@ -25,16 +24,27 @@ sheet1 = xw1.sheets['売り上げ記入用']
 
 def osi_sum():
     o_sum = sum([sheet1.range('B{}'.format(n1)).options(empty=0).value * sheet1.range('C{}'.format(n1)).options(empty=0).value for n1 in range(1, 5, 1)])
+    return o_sum
 def water_sum():
     w_sum = sum([sheet1.range('B{}'.format(n2)).options(empty=0).value * sheet1.range('C{}'.format(n2)).options(empty=0).value for n2 in range(5, 10, 1)])
+    return w_sum
 def ice_sum():
     i_sum = sum([sheet1.range('B{}'.format(n3)).options(empty=0).value * sheet1.range('C{}'.format(n3)).options(empty=0).value for n3 in range(10, 17, 1)])
+    return i_sum
 def day_sum():
     osibori = osi_sum()
     water = water_sum()
     ice = ice_sum()
     d_sum = osibori + water + ice
+    return d_sum
+osibori = osi_sum()
+water = water_sum()
+ice = ice_sum()
+day = day_sum()
 
+def main_to_save():
+    xw2.sheets.active.range('B2').value(osibori)
+main_to_save()
 
 def month_sum():
     for m in range(1,13,1):
@@ -86,10 +96,6 @@ w_Book.close()  # 書き込みファイル閉じる
 xw.Book(natural_save_excel).close()  # 原本ファイル閉じる
 
 
-def main_to_save():
-    a = osi_sum()
-    print(a)
 
-main_to_save()
 #    s_Book.sheets['{}月'.format(w_month)].range('B{}'.format(w_month))
 
