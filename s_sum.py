@@ -11,18 +11,17 @@ s_path= os.path.join(save_folder_path,'{}年保存先.xlsx'.format(w_year))
 xw2 = xw.Book(s_path)
 sheet1 = xw1.sheets['売り上げ記入用']
 
-def day_sum():
-    def osi_sum():
-        o_sum = sum([sheet1.range('B{}'.format(n1)).options(empty=0).value * sheet1.range('C{}'.format(n1)).options(empty=0).value for n1 in range(1, 5, 1)])
-    def water_sum():
-        w_sum = sum([sheet1.range('B{}'.format(n2)).options(empty=0).value * sheet1.range('C{}'.format(n2)).options(empty=0).value for n2 in range(5, 10, 1)])
-    def ice_sum():
-        i_sum = sum([sheet1.range('B{}'.format(n3)).options(empty=0).value * sheet1.range('C{}'.format(n3)).options(empty=0).value for n3 in range(10, 17, 1)])
-    osibori = osi_sum()
-    water = water_sum()
-    ice = ice_sum()
-    d_sum = osibori+water+ice
-    return d_sum
+def osi_sum():
+    o_sum = sum([sheet1.range('B{}'.format(n1)).options(empty=0).value * sheet1.range('C{}'.format(n1)).options(empty=0).value for n1 in range(1, 5, 1)])
+def water_sum():
+    w_sum = sum([sheet1.range('B{}'.format(n2)).options(empty=0).value * sheet1.range('C{}'.format(n2)).options(empty=0).value for n2 in range(5, 10, 1)])
+def ice_sum():
+    i_sum = sum([sheet1.range('B{}'.format(n3)).options(empty=0).value * sheet1.range('C{}'.format(n3)).options(empty=0).value for n3 in range(10, 17, 1)])
+osibori = osi_sum()
+water = water_sum()
+ice = ice_sum()
+d_sum = osibori+water+ice
+
 def month_sum():
     for m in range(1,13,1):
         sheet2 = xw2.sheets.range('{}月'.format(m)).options(empty=0).value

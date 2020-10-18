@@ -30,7 +30,7 @@ else:
         copy_month_value = natural_month_sheet.range('A1:F32').options(empty=0).value
         copy_year_value = natural_year_sheet.range('A1:C13').options(empty=0).value
         wb2020.sheets.add(name='{}月'.format(m))
-        wb2020.save()
+    wb2020.save()
     wb2020.close()
 
 path_dict['{}.xlsx'.format(w_year)] = os.path.join(save_folder_path, '{}年保存先.xlsx'.format(w_year))
