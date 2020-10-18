@@ -14,19 +14,27 @@ w_Book.close()#閉じまちた
 
 path_dict['{}.xlsx'.format(w_year)] = os.path.join(save_folder_path,'{}年保存先.xlsx'.format(w_year))
 #path_dictは　2020年のエクセルファイル作成時のpathを呼び出す。
+s_book = xw.Book(os.path.join(save_folder_path, '{}年保存先.xlsx'.format(w_year)))
+original = xw.Book(natural_save_excel).sheets.active
+copy_values = original.range('A1:F32').value#リスト上で値はとれている
+s_book = s_book.sheets['{}月'.format(w_month)].range('A1:F32').value
+s_book = copy_values.copy(destination=s_book)
+s_book.save
 
 
 def make_s_book():
     s_book = xw.Book(os.path.join(save_folder_path,'{}年保存先.xlsx'.format(w_year)))
     original = xw.Book(natural_save_excel).sheets.active
-    s_book = s_book.sheets['{}月'.format(w_month)]
-    for r in range(1, 32):
-        for c in range(1, 7):
+    copy_values = original.range('A1:F32').value
+    s_book = s_book.sheets['{}月'.format(w_month)].range('A1:F32')
+    save_book = copy_values.copy(destination = s_book)
 
-            copy_value = original.cells(row = r , column = c ).value
-
-            s_book.cells(row = r , column = c , value = copy_value)
-
-
+    print(copy_values)
 
 make_s_book()
+# make_s_book()
+# for r in range(1, 32):
+#     for c in range(1, 7):
+#         copy_value = original.cells(row=r, column=c).value
+#
+#         s_book.cells(row=r, column=c, value=copy_value)
