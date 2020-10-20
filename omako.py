@@ -1,5 +1,3 @@
-
-
 import xlwings as xw
 import os
 import numpy as np
@@ -18,7 +16,7 @@ year = int(w_book.sheets['売り上げ記入用'].range('F2').options(empty=0).v
 path_dict['s_path'] = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))  # 保存用エクエルファイルのパス
 path_dict['original_path'] = os.path.join(s_dir, 'shuya_natural保存先.xlsx')  # 原本のエクセルファイルのパス
 path_dict['2020.xlsx'] = os.path.join(s_dir, '2020年保存先.xlsx')# 2020年のエクセルファイル作成時のpathを呼び出すのを追加
-
+save_path = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))
 wb_2020 = xw.Book()
 original_book = xw.Book(path_dict['original_path'])
 
@@ -90,9 +88,10 @@ ice = ice_sum()
 day = day_sum()
 
 def main_to_save():
-    path_dict['s_path'] .sheets.active.range('B2').value(osibori)
+    s_sheet = save_path.sheets['{}月'.format(month_)]
+    s_range = s_sheet.range('B2:F13')
+    s_range.value=osibori
 main_to_save()
-
 def month_sum():
     for m in range(1, 13, 1):
 
