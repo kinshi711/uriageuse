@@ -85,25 +85,39 @@ def day_sum():
 osibori = osibori_sum()
 water = water_sum()
 ice = ice_sum()
-day = day_sum()
+sum_day = day_sum()
+day_1 = 0
 
-def main_to_save():
-    s_sheet = save_path.sheets['{}月'.format(month_)]
-    s_range = s_sheet.range('B2:F13')
-    s_range.value=osibori
-main_to_save()
+for i in range(1,32):
+    if str(i) in str(day):
+        day_1 = i + 1
+wb_2020.sheets['{}月'.format(month)].range('B{}'.format(day_1)).value = osibori
+wb_2020.sheets['{}月'.format(month)].range('C{}'.format(day_1)).value = water
+wb_2020.sheets['{}月'.format(month)].range('D{}'.format(day_1)).value = ice
+wb_2020.sheets['{}月'.format(month)].range('E{}'.format(day_1)).value = sum_day
+
+#wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
 def month_sum():
     for m in range(1, 13, 1):
+        m_sheet = wb_2020.sheets['{}月'.format(month)]
+        m_list = m_sheet.range('E2:E32').options(empty=0).value
+        m_sum = sum(m_list)
+    return m_sum
+sum_month = month_sum()
+wb_2020.sheets['{}月'.format(month)].range('F{}'.format(day_1)).value = sum_month
 
-        m_sheet = s_book.sheets.range('{}月'.format(m)).value
-        m_sum = sum([m_sheet.range('E{}'.format(num)).options(empty=0).value for num in (2, 32, 1)])
-        return m_sum
+for i in range(1,13):
+    if str(i) in str(month):
+        month_1 = i + 1
 
+wb_2020.sheets['年'].range('B{}'.format(month_1)).value = sum_month
 
 def year_sum():
-    y_sheet = s_book.sheets['年'].range('B2:B13').options(empty=0).value[0:][0:]
+    y_sheet = wb_2020.sheets['年'].range('B2:B13').options(empty=0).value
     y_sum = sum(y_sheet)
     return y_sum
-
+sum_year = year_sum()
+wb_2020.sheets['年'].range('C{}'.format(month_1)).value = sum_year
 w_book.close()
 original_book.close()
+wb_2020.save()
