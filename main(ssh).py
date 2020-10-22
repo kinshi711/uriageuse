@@ -32,7 +32,6 @@ original_sheet= original_book.sheets
 original_year_sheet = original_book.sheets['年']
 original_year_value =np.array(original_year_sheet.range('A1:C13').options(empty=0).value)
 
-
 try:
     s_path_book= xw.Book(path_dict['s_path'])
     s_path_book.close()
@@ -111,5 +110,4 @@ sum_year = year_sum()
 s_book.sheets['年'].range('C{}'.format(month_1)).value = sum_year
 w_book.close()
 original_book.close()
-
 s_book.save()
