@@ -9,8 +9,8 @@ path_dict['w_path'] = os.path.join(dir, '書き込み用エクセルファイル
 w_book= xw.Book(path_dict['w_path'])  # 書き込み用のエクセルファイルを開く
 
 
-month = int(w_book.sheets['売り上げ記入用'].range('G1').options(empty=0).value)  # 書き込まれた月の参照
-day = int(w_book.sheets["売り上げ記入用"].range('I1').options(empty=0).value)  # 書き込まれた日の参照
+month = int(w_book.sheets['売り上げ記入用'].range('H2').options(empty=0).value)  # 書き込まれた月の参照
+day = int(w_book.sheets["売り上げ記入用"].range('J2').options(empty=0).value)  # 書き込まれた日の参照
 s_dir = os.path.join(dir, '保存先')  # 保存用フォルダーの参照
 year = int(w_book.sheets['売り上げ記入用'].range('F2').options(empty=0).value)  # 書き込まれた年度を参照
 path_dict['s_path'] = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))  # 保存用エクエルファイルのパス
