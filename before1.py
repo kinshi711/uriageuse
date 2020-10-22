@@ -28,12 +28,10 @@ original_book = xw.Book(path_dict['original_path'])
 # else:
 
 sheet_list = ('年','12月','11月','10月','9月','8月','7月','6月','5月','4月','3月','2月','1月')
-for sheet_tapple in sheet_list:
-    wb_2020.sheets.add(name='{}'.format(sheet_tapple))
-wb_2020.save(path_dict['2020.xlsx'])
 original_sheet= original_book.sheets
 original_year_sheet = original_book.sheets['年']
 original_year_value =np.array(original_year_sheet.range('A1:C13').options(empty=0).value)
+<<<<<<< HEAD
 wb_2020.sheets['年'].range('A1:F13').options(empty=0).value = original_year_value
 for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
     wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
@@ -57,8 +55,23 @@ else:
 
 w_sheet= w_book.sheets['売り上げ記入用']# 売り上げ記入用
 
+=======
+>>>>>>> 18d410c45581558d5da7825c3af7be0c76c13acb
 
+try:
+    s_path_book= xw.Book(path_dict['s_path'])
+    s_path_book.close()
+except FileNotFoundError:
+    s_book = xw.Book()
+    s_book.save(path_dict['s_path'])
+    for sheet_tapple in sheet_list:
+        s_book.sheets.add(name='{}'.format(sheet_tapple))
+        s_book.sheets['年'].range('A1:F13').options(empty=0).value= original_year_value
+    for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
+        s_book.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
+    s_book.save(path_dict['s_path'])
 
+w_sheet= w_book.sheets['売り上げ記入用']# 売り上げ記入用
 def osibori_sum():
     o_sum = sum(
         [w_sheet.range('B{}'.format(n1)).options(empty=0).value * w_sheet.range('C{}'.format(n1)).options(empty=0).value
@@ -91,33 +104,40 @@ day_1 = 0
 for i in range(1,32):
     if str(i) in str(day):
         day_1 = i + 1
-wb_2020.sheets['{}月'.format(month)].range('B{}'.format(day_1)).value = osibori
-wb_2020.sheets['{}月'.format(month)].range('C{}'.format(day_1)).value = water
-wb_2020.sheets['{}月'.format(month)].range('D{}'.format(day_1)).value = ice
-wb_2020.sheets['{}月'.format(month)].range('E{}'.format(day_1)).value = sum_day
+
+s_book= xw.Book(path_dict['s_path'])
+s_book.sheets['{}月'.format(month)].range('B{}'.format(day_1)).value = osibori
+s_book.sheets['{}月'.format(month)].range('C{}'.format(day_1)).value = water
+s_book.sheets['{}月'.format(month)].range('D{}'.format(day_1)).value = ice
+s_book.sheets['{}月'.format(month)].range('E{}'.format(day_1)).value = sum_day
 
 #wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
 def month_sum():
     for m in range(1, 13, 1):
-        m_sheet = wb_2020.sheets['{}月'.format(month)]
+        m_sheet = s_book.sheets['{}月'.format(month)]
         m_list = m_sheet.range('E2:E32').options(empty=0).value
         m_sum = sum(m_list)
     return m_sum
 sum_month = month_sum()
-wb_2020.sheets['{}月'.format(month)].range('F{}'.format(day_1)).value = sum_month
+s_book.sheets['{}月'.format(month)].range('F{}'.format(day_1)).value = sum_month
 
 for i in range(1,13):
     if str(i) in str(month):
         month_1 = i + 1
 
-wb_2020.sheets['年'].range('B{}'.format(month_1)).value = sum_month
+s_book.sheets['年'].range('B{}'.format(month_1)).value = sum_month
 
 def year_sum():
-    y_sheet = wb_2020.sheets['年'].range('B2:B13').options(empty=0).value
+    y_sheet = s_book.sheets['年'].range('B2:B13').options(empty=0).value
     y_sum = sum(y_sheet)
     return y_sum
+
 sum_year = year_sum()
-wb_2020.sheets['年'].range('C{}'.format(month_1)).value = sum_year
+s_book.sheets['年'].range('C{}'.format(month_1)).value = sum_year
 w_book.close()
 original_book.close()
+<<<<<<< HEAD
 wb_2020.save()
+=======
+s_book.save()
+>>>>>>> 18d410c45581558d5da7825c3af7be0c76c13acb
