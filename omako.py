@@ -28,37 +28,35 @@ original_book = xw.Book(path_dict['original_path'])
 # else:
 
 sheet_list = ('年','12月','11月','10月','9月','8月','7月','6月','5月','4月','3月','2月','1月')
-for sheet_tapple in sheet_list:
-    wb_2020.sheets.add(name='{}'.format(sheet_tapple))
-wb_2020.save(path_dict['2020.xlsx'])
 original_sheet= original_book.sheets
 original_year_sheet = original_book.sheets['年']
 original_year_value =np.array(original_year_sheet.range('A1:C13').options(empty=0).value)
-wb_2020.sheets['年'].range('A1:F13').options(empty=0).value = original_year_value
-for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
-    wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
-
+try:
+    book2020 =xw.Book(path_dict['2020.xlsx'])
+    book2020.close()
+except FileNotFoundError:
     wb_2020.save(path_dict['2020.xlsx'])
-wb_2020.save(path_dict['2020.xlsx'])
+    for sheet_tapple in sheet_list:
+        wb_2020.sheets.add(name='{}'.format(sheet_tapple))
+        wb_2020.sheets['年'].range('A1:F13').options(empty=0).value = original_year_value
+    for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
+        wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
+    wb_2020.save(path_dict['2020.xlsx'])
 
-if   path_dict['s_path'] in s_dir:  # 新規保存用のエクセルファイルがフォルダーに既に有ったら　
-     s_book= xw.Book()  # 新規保存用のエクセルファイル
-     s_book.close()# 新規でエクセルファイルもいらないので消す
-elif path_dict['w_path'] in path_dict['s_path']:
-    s_book= xw.Book()  # 新規保存用のエクセルファイル
-    s_book.close()
-else:
-    s_book= xw.Book()  # 新規保存用のエクセルファイル
-    try:
-        s_book.save(path_dict['{}.xlsx'.format(year)])
-        s_book.close()#保存用のファイルがフォルダーに追加されたので消す。
-    except:
-        s_book.close()
+try:
+    s_path_book= xw.Book(path_dict['s_path'])
+    s_path_book.close()
+except FileNotFoundError:
+    s_book = xw.Book()
+    s_book.save(path_dict['s_path'])
+    for sheet_tapple in sheet_list:
+        s_book.sheets.add(name='{}'.format(sheet_tapple))
+        s_book.sheets['年'].range('A1:F13').options(empty=0).value= original_year_value
+    for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
+        s_book.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
+    s_book.save(path_dict['s_path'])
 
 w_sheet= w_book.sheets['売り上げ記入用']# 売り上げ記入用
-
-
-
 def osibori_sum():
     o_sum = sum(
         [w_sheet.range('B{}'.format(n1)).options(empty=0).value * w_sheet.range('C{}'.format(n1)).options(empty=0).value
@@ -91,6 +89,8 @@ day_1 = 0
 for i in range(1,32):
     if str(i) in str(day):
         day_1 = i + 1
+
+wb_2020= xw.Book(path_dict['2020.xlsx'])
 wb_2020.sheets['{}月'.format(month)].range('B{}'.format(day_1)).value = osibori
 wb_2020.sheets['{}月'.format(month)].range('C{}'.format(day_1)).value = water
 wb_2020.sheets['{}月'.format(month)].range('D{}'.format(day_1)).value = ice
