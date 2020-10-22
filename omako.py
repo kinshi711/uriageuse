@@ -41,12 +41,12 @@ for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
     wb_2020.save(path_dict['2020.xlsx'])
 wb_2020.save(path_dict['2020.xlsx'])
 
-if   path_dict['s_path'] in s_dir:  # 新規保存用のエクセルファイルがフォルダーに既に有ったら　
-     s_book= xw.Book()  # 新規保存用のエクセルファイル
-     s_book.close()# 新規でエクセルファイルもいらないので消す
-elif path_dict['w_path'] in path_dict['s_path']:
+if  path_dict['s_path'] in s_dir:  # 新規保存用のエクセルファイルがフォルダーに既に有ったら　
     s_book= xw.Book()  # 新規保存用のエクセルファイル
-    s_book.close()
+    s_book.close()# 新規でエクセルファイルもいらないので消す
+elif path_dict['w_path'] in path_dict['s_path']:
+     s_book= xw.Book()  # 新規保存用のエクセルファイル
+     s_book.close()
 else:
     s_book= xw.Book()  # 新規保存用のエクセルファイル
     try:
