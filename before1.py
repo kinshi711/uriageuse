@@ -31,6 +31,32 @@ sheet_list = ('年','12月','11月','10月','9月','8月','7月','6月','5月','
 original_sheet= original_book.sheets
 original_year_sheet = original_book.sheets['年']
 original_year_value =np.array(original_year_sheet.range('A1:C13').options(empty=0).value)
+<<<<<<< HEAD
+wb_2020.sheets['年'].range('A1:F13').options(empty=0).value = original_year_value
+for month_ in (1,2,3,4,5,6,7,8,9,10,11,12):
+    wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
+
+    wb_2020.save(path_dict['2020.xlsx'])
+wb_2020.save(path_dict['2020.xlsx'])
+
+if  path_dict['s_path'] in s_dir:  # 新規保存用のエクセルファイルがフォルダーに既に有ったら　
+    s_book= xw.Book()  # 新規保存用のエクセルファイル
+    s_book.close()# 新規でエクセルファイルもいらないので消す
+elif path_dict['w_path'] in path_dict['s_path']:
+     s_book= xw.Book()  # 新規保存用のエクセルファイル
+     s_book.close()
+else:
+    s_book= xw.Book()  # 新規保存用のエクセルファイル
+    try:
+        s_book.save(path_dict['{}.xlsx'.format(year)])
+        s_book.close()#保存用のファイルがフォルダーに追加されたので消す。
+    except:
+        s_book.close()
+
+w_sheet= w_book.sheets['売り上げ記入用']# 売り上げ記入用
+
+=======
+>>>>>>> 18d410c45581558d5da7825c3af7be0c76c13acb
 
 try:
     s_path_book= xw.Book(path_dict['s_path'])
@@ -110,4 +136,8 @@ sum_year = year_sum()
 s_book.sheets['年'].range('C{}'.format(month_1)).value = sum_year
 w_book.close()
 original_book.close()
+<<<<<<< HEAD
+wb_2020.save()
+=======
 s_book.save()
+>>>>>>> 18d410c45581558d5da7825c3af7be0c76c13acb
