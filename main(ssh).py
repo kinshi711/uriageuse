@@ -2,22 +2,20 @@ import xlwings as xw
 import os
 import numpy as np
 
-
 path_dict = {}  # 空辞書を作って　パスを追加していく
 dir = os.getcwd()  # 絶対参照というか自分の今いる場所がわかる /uriage
 path_dict['w_path'] = os.path.join(dir, '書き込み用エクセルファイル.xlsm')  # os.path.joinっているのはパスをつなげるときに必要、joinだけだとできない
 w_book= xw.Book(path_dict['w_path'])  # 書き込み用のエクセルファイルを開く
 
 
-month = int(w_book.sheets['売り上げ記入用'].range('H2').options(empty=0).value)  # 書き込まれた月の参照
-day = int(w_book.sheets["売り上げ記入用"].range('J2').options(empty=0).value)  # 書き込まれた日の参照
+month = w_book.sheets['売り上げ記入用'].range('H2').options(empty='選択肢してください').value  # 書き込まれた月の参照
+day = w_book.sheets["売り上げ記入用"].range('J2').options(empty='選択して下さい').value # 書き込まれた日の参照
 s_dir = os.path.join(dir, '保存先')  # 保存用フォルダーの参照
-year = int(w_book.sheets['売り上げ記入用'].range('F2').options(empty=0).value)  # 書き込まれた年度を参照
+year = w_book.sheets['売り上げ記入用'].range('F2').options(empty='選択肢してください').value # 書き込まれた年度を参照
 path_dict['s_path'] = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))  # 保存用エクエルファイルのパス
 path_dict['original_path'] = os.path.join(s_dir, 'shuya_natural保存先.xlsx')  # 原本のエクセルファイルのパス
 path_dict['2020.xlsx'] = os.path.join(s_dir, '2020年保存先.xlsx')# 2020年のエクセルファイル作成時のpathを呼び出すのを追加
 save_path = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))
-wb_2020 = xw.Book()
 original_book = xw.Book(path_dict['original_path'])
 
 
@@ -80,10 +78,10 @@ for i in range(1,32):
         day_1 = i + 1
 
 s_book= xw.Book(path_dict['s_path'])
-s_book.sheets['{}月'.format(month)].range('B{}'.format(day_1)).value = osibori
-s_book.sheets['{}月'.format(month)].range('C{}'.format(day_1)).value = water
-s_book.sheets['{}月'.format(month)].range('D{}'.format(day_1)).value = ice
-s_book.sheets['{}月'.format(month)].range('E{}'.format(day_1)).value = sum_day
+s_book.sheets['{}月'.format(month)].range('B{}'.format(day_1)).options(empty=0).value = osibori
+s_book.sheets['{}月'.format(month)].range('C{}'.format(day_1)).options(empty=0).value = water
+s_book.sheets['{}月'.format(month)].range('D{}'.format(day_1)).options(empty=0).value = ice
+s_book.sheets['{}月'.format(month)].range('E{}'.format(day_1)).options(empty=0).value = sum_day
 
 #wb_2020.sheets['{}月'.format(month_)].range('A1:F32').options(empty=0).value = original_sheet['{}月'.format(month_)].range('A1:F32').options(empty=0).value
 def month_sum():
