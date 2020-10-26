@@ -43,7 +43,7 @@ day = int(w_book.sheets["売り上げ記入用"].range('J2').options(empty='選�
 s_dir = os.path.join(dir, '保存先')
 year = int(w_book.sheets['売り上げ記入用'].range('F2').options(empty='選択肢してください').value)
 path_dict['s_path'] = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))
-path_dict['original_path'] = os.path.join(s_dir, 'shuya_natural保存先.xlsx')
+path_dict['original_path'] = os.path.join(s_dir, 'original.xlsx')
 save_path = os.path.join(s_dir, '{}年保存先.xlsx'.format(year))
 original_book = xw.Book(path_dict['original_path'])
 
